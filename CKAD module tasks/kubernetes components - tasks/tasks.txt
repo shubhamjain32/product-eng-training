@@ -1,0 +1,32 @@
+Task 1: Try to figure out all the flags the core components (API Server, Controller Manager, Scheduler) are running with.
+-------------------------------------------------------------------------------------------------------------------------
+
+Create a new context for "kube-system" namespace:
+	kubectl config set-context system-ns --namespace kube-system --cluster kind-kind --user kind-kind
+
+Switch to the new context:
+	kubectl config use-context system-ns
+
+View the lists of objects in current namespace:
+	kubectl get all
+
+Describe api-server pod to view the flags it is running with:
+	kubectl describe pod/kube-apiserver-kind-control-plane
+
+Describe controller-manager pod to view the flags it is running with:
+	kubectl describe pod/kube-controller-manager-kind-control-plane
+
+Describe kube-scheduler pod to view the flags it is running with:
+	kubectl describe pod/kube-scheduler-kind-control-plane
+
+
+
+
+Task 2: What are all the controllers that are are enabled by default in Controller manager component?
+-----------------------------------------------------------------------------------------------------
+
+Following are the controllers which are enabled by default in kube-controller-manager:
+	attachdetach, cloud-node-lifecycle, clusterrole-aggregation, cronjob, csrapproving, csrcleaner, csrsigning, daemonset, deployment, disruption, endpoint, endpointslice, endpointslicemirroring, ephemeral-volume, garbagecollector, horizontalpodautoscaling, job, namespace, nodeipam, nodelifecycle, persistentvolume-binder, persistentvolume-expander, podgc, pv-protection, pvc-protection, replicaset, replicationcontroller, resourcequota, root-ca-cert-publisher, route, service, serviceaccount, serviceaccount-token, statefulset, ttl, ttl-after-finished
+
+These are specified as "*" in the command-line-option (or flag) "--controllers" in command "kube-controller-manager" executed in kube-controller-manager's pod's container
+	--controllers=*

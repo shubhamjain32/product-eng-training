@@ -1,0 +1,23 @@
+Task 1: Run a pod that can be used to run network utility (curl, dig, nslookup) commands against a host.
+--------------------------------------------------------------------------------------------------------
+
+Create an nginx pod: 
+(nginx pod is taken just to make sure that there is a main process running in the pod's container, because if there is no main process running in the pod's container, then the pod will just stop immediately after starting. Otherwise there is no specific use of nginx server running inside the pod's container. If we are sure that pod is to be run only for some specific time, then instead of making nginx pod, we can just make a simple pod and run the "sleep <time>" command as the main process of the pod, so that it will keep on running until the <time> gets elapsed)
+	
+	kubectl create -f workloads-task1.yml
+
+
+List the objects created via the yml file, and wait for the pod to get running:
+	kubectl get -f workloads-task1.yml
+
+Go into the bash terminal inside the pod's container:
+	kubectl exec -it workload-task1 -- bash
+
+apt update
+apt install dnsutils
+
+dig google.com
+curl google.com
+nslookup google.com
+
+exit
